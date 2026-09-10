@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wedding Registry - Iqbal & Raisya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pastel-blue:#AEE1F9;
-    --pastel-blue-dark:#5FA8D3;
-    --broken-white:#FAF7F0;
-    --deep-green:#1F4B3F;
-    --deep-green-light:#2E6B57;
+    --pastel-blue:#96A7B6;
+    --pastel-blue-dark:#55738D;
+    --broken-white:#CBC8C4;
+    --deep-green:#2A3B27;
+    --deep-green-light:#70805D;
     --text-main:#233433;
     --text-muted:#6B7A76;
     --card-bg:#FFFFFF;
@@ -20,7 +23,7 @@
   *{box-sizing:border-box;}
   body{
     margin:0;
-    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    font-family:'Poppins',system-ui,-apple-system,sans-serif;
     background:var(--broken-white);
     color:var(--text-main);
   }
@@ -31,11 +34,11 @@
     padding:40px 20px 32px;
     position:relative;
   }
-  .ornament{font-size:13px;letter-spacing:3px;text-transform:uppercase;opacity:0.85;margin-bottom:10px;}
-  h1{font-family:Georgia,'Times New Roman',serif;font-size:30px;margin:0 0 6px;line-height:1.3;}
+  .ornament{font-family:'Kalam',cursive;font-size:15px;letter-spacing:2px;text-transform:uppercase;opacity:0.9;margin-bottom:10px;}
+  h1{font-family:'Caveat',cursive;font-weight:700;font-size:44px;margin:0 0 6px;line-height:1.25;}
   .amp{color:var(--pastel-blue);font-style:italic;}
   .date-badge{display:inline-block;margin-top:12px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.35);padding:8px 20px;border-radius:999px;font-size:14px;}
-  .quote{max-width:480px;margin:16px auto 0;font-size:13px;opacity:0.85;font-style:italic;line-height:1.6;}
+  .quote{font-family:'Kalam',cursive;max-width:480px;margin:16px auto 0;font-size:14.5px;opacity:0.9;line-height:1.7;}
 
   .mode-switch{
     display:flex;justify-content:center;gap:0;margin:18px auto 0;max-width:280px;
@@ -91,6 +94,8 @@
   .card:hover{box-shadow:0 6px 18px rgba(31,75,63,0.08);transform:translateY(-2px);}
   .card.taken{opacity:0.6;}
   .cat-tag{align-self:flex-start;font-size:11px;font-weight:600;color:var(--deep-green);background:#E7F2E9;padding:3px 10px;border-radius:999px;}
+  .item-photo{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:#F1F0E8;margin-bottom:4px;}
+  .item-photo-placeholder{width:100%;aspect-ratio:1/1;border-radius:12px;background:#F1F0E8;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:12px;margin-bottom:4px;}
   .item-name{font-size:15px;font-weight:600;margin:2px 0 0;line-height:1.4;}
   .item-store{font-size:12.5px;color:var(--text-muted);}
   .item-price{font-size:16px;font-weight:700;color:var(--deep-green);margin-top:2px;}
@@ -131,8 +136,8 @@
   .field input{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:9px;font-size:14px;font-family:inherit;}
   .field input:focus{outline:2px solid var(--pastel-blue-dark);border-color:transparent;}
   .radio-group{display:flex;flex-direction:column;gap:8px;}
-  .radio-option{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:9px;padding:9px 11px;cursor:pointer;font-size:13.5px;}
-  .radio-option input{width:auto;margin:0;}
+  .radio-option{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:13.5px;}
+  .radio-option input{width:18px;height:18px;flex-shrink:0;margin:0;}
   .radio-option.checked{border-color:var(--deep-green);background:#F3F8F4;}
   .modal-actions{display:flex;gap:10px;margin-top:18px;}
   .modal-actions button{flex:1;padding:11px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;}
@@ -249,8 +254,8 @@
     <h3 id="modalItemName">Booking barang</h3>
     <p class="modal-sub">Isi info singkat biar kami tahu siapa yang akan memberi hadiah ini.</p>
     <div class="field">
-      <label>Nama kamu</label>
-      <input type="text" id="fGuestName" placeholder="Nama lengkap">
+      <label>Nama kamu (atau nama grup/circle kalau patungan)</label>
+      <input type="text" id="fGuestName" placeholder="cth. Budi, atau Circle SMA 3">
       <div class="error-text" id="nameError">Isi nama kamu dulu ya</div>
     </div>
     <div class="field">
@@ -290,6 +295,11 @@
       <label>Link Shopee / Tokopedia (referensi kami)</label>
       <input type="text" id="fLink" placeholder="https://shopee.co.id/...">
       <div class="error-text" id="linkError">Masukkan link yang valid (diawali https://)</div>
+    </div>
+    <div class="field">
+      <label>Link foto produk (opsional)</label>
+      <input type="text" id="fPhoto" placeholder="https://...jpg atau .png">
+      <div class="error-text" id="photoError">Masukkan link yang valid (diawali https://)</div>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="adminCancelBtn">Batal</button>
@@ -418,6 +428,7 @@ function renderGuest(){
     card.className = 'card' + (item.booked ? ' taken' : '');
     card.innerHTML = `
       ${item.booked ? '<div class="taken-badge">Sudah dibooking</div>' : ''}
+      ${item.photo ? `<img class="item-photo" src="${item.photo}" alt="${item.name}" onerror="this.outerHTML='<div class=item-photo-placeholder>Foto tidak tersedia</div>'">` : '<div class="item-photo-placeholder">Belum ada foto</div>'}
       <span class="cat-tag">${item.category || 'Lainnya'}</span>
       <p class="item-name">${item.name}</p>
       <span class="item-store">${item.store || ''}</span>
@@ -589,12 +600,15 @@ const fCategory = document.getElementById('fCategory');
 const fPrice = document.getElementById('fPrice');
 const fLink = document.getElementById('fLink');
 const linkError = document.getElementById('linkError');
+const fPhoto = document.getElementById('fPhoto');
+const photoError = document.getElementById('photoError');
 
 document.getElementById('addBtn').addEventListener('click', ()=>{
   editingId = null;
   document.getElementById('adminModalTitle').textContent = 'Tambah barang';
-  fName.value=''; fStore.value=''; fCategory.value=''; fPrice.value=''; fLink.value='';
+  fName.value=''; fStore.value=''; fCategory.value=''; fPrice.value=''; fLink.value=''; fPhoto.value='';
   linkError.style.display='none';
+  photoError.style.display='none';
   adminModalOverlay.classList.add('open');
   fName.focus();
 });
@@ -605,7 +619,9 @@ function openEdit(id){
   document.getElementById('adminModalTitle').textContent = 'Edit barang';
   fName.value = it.name; fStore.value = it.store||''; fCategory.value = it.category||'';
   fPrice.value = it.price||''; fLink.value = it.link||'';
+  fPhoto.value = it.photo||'';
   linkError.style.display='none';
+  photoError.style.display='none';
   adminModalOverlay.classList.add('open');
   fName.focus();
 }
@@ -618,19 +634,21 @@ document.getElementById('adminSaveBtn').addEventListener('click', async ()=>{
   const category = fCategory.value.trim();
   const price = parseFloat(fPrice.value);
   const link = fLink.value.trim();
+  const photo = fPhoto.value.trim();
 
   let valid = true;
   if(!name){ fName.style.borderColor='#C0392B'; valid=false; } else { fName.style.borderColor=''; }
   if(link && !/^https?:\/\//i.test(link)){ linkError.style.display='block'; valid=false; } else { linkError.style.display='none'; }
+  if(photo && !/^https?:\/\//i.test(photo)){ photoError.style.display='block'; valid=false; } else { photoError.style.display='none'; }
   if(!valid) return;
 
   if(editingId){
     await updateDoc(doc(db,"registry_items",editingId), {
-      name, store, category: category||'Lainnya', price: isNaN(price)?0:price, link
+      name, store, category: category||'Lainnya', price: isNaN(price)?0:price, link, photo
     });
   } else {
     await addDoc(itemsCol, {
-      name, store, category: category||'Lainnya', price: isNaN(price)?0:price, link,
+      name, store, category: category||'Lainnya', price: isNaN(price)?0:price, link, photo,
       booked:false, booking:null, createdAt: serverTimestamp()
     });
   }
