@@ -9,13 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --pastel-blue:#96A7B6;
-    --pastel-blue-dark:#55738D;
-    --broken-white:#CBC8C4;
-    --deep-green:#2A3B27;
-    --deep-green-light:#70805D;
-    --text-main:#233433;
-    --text-muted:#6B7A76;
+    --pastel-blue:#A7B6BC;
+    --pastel-blue-dark:#7D96A0;
+    --broken-white:#E8DDDB;
+    --deep-green:#5C6B63;
+    --deep-green-light:#8A9483;
+    --text-main:#3A3F3D;
+    --text-muted:#7A756E;
     --card-bg:#FFFFFF;
     --border:#E4E1D6;
     --radius:16px;
@@ -137,7 +137,7 @@
   .field input:focus{outline:2px solid var(--pastel-blue-dark);border-color:transparent;}
   .radio-group{display:flex;flex-direction:column;gap:8px;}
   .radio-option{display:flex;align-items:center;gap:12px;border:1px solid var(--border);border-radius:9px;padding:11px 14px;cursor:pointer;font-size:13.5px;}
-  .radio-option input{width:18px;height:18px;flex-shrink:0;margin:0;}
+  .radio-option input{width:18px;height:18px;flex-shrink:0;margin:0 4px 0 0;}
   .radio-option.checked{border-color:var(--deep-green);background:#F3F8F4;}
   .modal-actions{display:flex;gap:10px;margin-top:18px;}
   .modal-actions button{flex:1;padding:11px;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;}
@@ -261,15 +261,15 @@
     <div class="field">
       <label>Kamu akan beli lewat mana?</label>
       <div class="radio-group">
-        <label class="radio-option" data-val="referensi"><input type="radio" name="source" value="referensi" checked>Pakai link yang kami kasih</label>
-        <label class="radio-option" data-val="lain"><input type="radio" name="source" value="lain">Beli dengan referensi/toko lain</label>
+        <label class="radio-option" data-val="referensi"><input type="radio" name="source" value="referensi" checked><span>Pakai link yang kami kasih</span></label>
+        <label class="radio-option" data-val="lain"><input type="radio" name="source" value="lain"><span>Beli dengan referensi/toko lain</span></label>
       </div>
     </div>
     <div class="field">
       <label>Hadiah akan dikirim ke mana?</label>
       <div class="radio-group">
-        <label class="radio-option" data-val="rumah"><input type="radio" name="shipping" value="rumah" checked>Kirim langsung ke alamat rumah kami</label>
-        <label class="radio-option" data-val="venue"><input type="radio" name="shipping" value="venue">Dibawa langsung ke tempat resepsi</label>
+        <label class="radio-option" data-val="rumah"><input type="radio" name="shipping" value="rumah" checked><span>Kirim langsung ke alamat rumah kami</span></label>
+        <label class="radio-option" data-val="venue"><input type="radio" name="shipping" value="venue"><span>Dibawa langsung ke tempat resepsi</span></label>
       </div>
     </div>
     <div class="field hidden" id="addressDisplayField">
