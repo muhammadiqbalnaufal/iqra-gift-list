@@ -214,6 +214,14 @@
         <div class="stat-card"><div class="stat-num" id="aStatAvail">0</div><div class="stat-label">Belum dibooking</div></div>
       </div>
 
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;">
+        <div style="font-weight:600;font-size:14px;margin-bottom:4px;">Alamat pengiriman</div>
+        <div class="muted" style="font-size:12px;margin-bottom:10px;">Ditampilkan ke tamu saat mereka pilih "kirim langsung ke rumah".</div>
+        <textarea id="addressInput" rows="3" placeholder="cth. Jl. Contoh No. 12, RT 03/RW 05, Kel. Sukamaju, Kec. Cibinong, Kab. Bogor, Jawa Barat 16911&#10;a.n. Muhammad Iqbal Naufal&#10;No. HP: 08xx-xxxx-xxxx" style="width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:9px;font-size:13.5px;font-family:inherit;resize:vertical;"></textarea>
+        <button class="btn btn-primary" id="saveAddressBtn" style="margin-top:10px;">Simpan alamat</button>
+        <span class="muted" id="addressSavedMsg" style="display:none;margin-left:8px;font-size:12px;color:var(--deep-green);">Tersimpan</span>
+      </div>
+
       <div class="toolbar">
         <div class="btn-row">
           <button class="btn btn-primary" id="addBtn">+ Tambah barang</button>
@@ -259,6 +267,10 @@
         <label class="radio-option" data-val="venue"><input type="radio" name="shipping" value="venue">Dibawa langsung ke tempat resepsi</label>
       </div>
     </div>
+    <div class="field hidden" id="addressDisplayField">
+      <label>Alamat kirim</label>
+      <div id="addressDisplayText" style="font-size:13px;color:var(--text-muted);background:#F3F8F4;border:1px solid var(--border);border-radius:9px;padding:10px 11px;white-space:pre-line;line-height:1.6;"></div>
+    </div>
     <div class="modal-actions">
       <button class="btn-cancel" id="bookCancelBtn">Batal</button>
       <button class="btn-save" id="bookSaveBtn">Konfirmasi booking</button>
@@ -290,7 +302,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
   getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
-  onSnapshot, serverTimestamp
+  onSnapshot, serverTimestamp, setDoc, getDoc
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 import {
   getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
@@ -309,6 +321,24 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const itemsCol = collection(db, "registry_items");
+const settingsDoc = doc(db, "settings", "general");
+
+let shippingAddress = '';
+onSnapshot(settingsDoc, (snap)=>{
+  shippingAddress = snap.exists() ? (snap.data().address || '') : '';
+  const addressInput = document.getElementById('addressInput');
+  if(addressInput && document.activeElement !== addressInput){
+    addressInput.value = shippingAddress;
+  }
+});
+
+document.getElementById('saveAddressBtn').addEventListener('click', async ()=>{
+  const val = document.getElementById('addressInput').value.trim();
+  await setDoc(settingsDoc, { address: val }, { merge: true });
+  const msg = document.getElementById('addressSavedMsg');
+  msg.style.display = 'inline';
+  setTimeout(()=> msg.style.display='none', 2000);
+});
 
 let items = [];
 let bookingTargetId = null;
@@ -445,6 +475,15 @@ function updateRadioStyles(){
   document.querySelectorAll('.radio-option').forEach(opt=>{
     opt.classList.toggle('checked', opt.querySelector('input').checked);
   });
+  const shipVal = document.querySelector('input[name="shipping"]:checked')?.value;
+  const addrField = document.getElementById('addressDisplayField');
+  const addrText = document.getElementById('addressDisplayText');
+  if(shipVal === 'rumah' && shippingAddress){
+    addrText.textContent = shippingAddress;
+    addrField.classList.remove('hidden');
+  } else {
+    addrField.classList.add('hidden');
+  }
 }
 document.querySelectorAll('.radio-option input').forEach(inp=> inp.addEventListener('change', updateRadioStyles));
 document.getElementById('bookCancelBtn').addEventListener('click', ()=> bookModalOverlay.classList.remove('open'));
